@@ -1,7 +1,7 @@
 var assert = require('assert');
 var parser = require('../src/parser.js');
 
-// Query should be on the form findNameAndAgeWhereAddress_CityEqualsCity
+// Query should be on the form findNameAndAgeAsRealAgeWhereAddress_CityEqualsCity
 
 describe('Parser', () => {
     describe('find clause', () => {
@@ -12,22 +12,32 @@ describe('Parser', () => {
 
         it('finds a single variable', () => {
             var expected = ['name'];
-            assert.deepEqual(parser('findName').find, expected);
+            var result = parser('findName').find;
+            assert.deepEqual(result.map(e => e.prop), expected);
         });
 
         it('finds multiple variables', () => {
+            var result = parser('findNameAndAddress').find;
             var expected = ['name', 'address'];
-            assert.deepEqual(parser('findNameAndAddress').find, expected);
+            assert.deepEqual(result.map(e => e.prop), expected);
         });
 
         it('assumes camelCase', () => {
+            var result = parser('findNameAndStreetAddress').find;
             var expected = ['name', 'streetAddress'];
-            assert.deepEqual(parser('findNameAndStreetAddress').find, expected);
+            assert.deepEqual(result.map(e => e.prop), expected);
         });
 
         it('finds nested properties and camelCases them', () => {
-            var expected = ['name', 'address_houseNumber'];
-            assert.deepEqual(parser('findNameAndAddress_HouseNumber').find, expected);
+            var result = parser('findLastNameAndAddress_HouseNumber').find;
+            var expected = ['lastName', 'address_houseNumber'];
+            assert.deepEqual(result.map(e => e.prop), expected);
+        });
+
+        it('can rename the selected properties', () => {
+            var result = parser('findLastNameAndAddress_HouseNumberAsHouseNumber').find;
+            var expected = [{prop: 'lastName', name: 'lastName'}, {prop: 'address_houseNumber', name: 'houseNumber'}];
+            assert.deepEqual(result, expected);
         });
     });
 

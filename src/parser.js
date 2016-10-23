@@ -27,7 +27,20 @@ function splitQuery(query) {
 
 function generateFind(findQuery) {
     if (findQuery == '') return [];
-    return findQuery.split('And').map(convertBackToCamelCase);
+
+    var parts = findQuery.split('And');
+
+    return parts.map(part => {
+        var [prop, name] = part.split('As');
+
+        prop = convertBackToCamelCase(prop);
+
+        return {
+            prop: prop,
+            name: name ? lowerCaseFirst(name) : prop
+        }
+
+    });
 }
 
 function generateWhere(whereQuery) {

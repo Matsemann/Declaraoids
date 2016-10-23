@@ -54,25 +54,7 @@ describe('Finder', () => {
             assert.deepEqual(result, expected)
         });
 
-        it('should find supernested variables', () => {
-            var input = {
-                levelOne: {
-                    levelTwo: {
-                        levelThree: {
-                            levelFour: "hey"
-                        }
-
-                    }
-                }
-            };
-            var result = finder([input]).findLevelOne_LevelTwo_LevelThree();
-            var expected = [{
-                levelFour: "hey"
-            }];
-            assert.deepEqual(result, expected)
-        });
-
-        it('should find supernested variables at different levels', () => {
+        describe('supernested', () => {
             var input = {
                 levelOne: {
                     levelTwo: {
@@ -83,15 +65,38 @@ describe('Finder', () => {
                     }
                 }
             };
-            var result = finder([input]).findLevelOne_LevelTwo_LevelThreeAndLevelOne_LevelTwo_AlsoLevelThree();
-            var expected = [{
-                levelOne_levelTwo_levelThree: {
+
+            it('should find supernested variables', () => {
+                var result = finder([input]).findLevelOne_LevelTwo_LevelThree();
+                var expected = [{
                     levelFour: "hey"
-                },
-                levelOne_levelTwo_alsoLevelThree: "three"
-            }];
-            assert.deepEqual(result, expected)
+                }];
+                assert.deepEqual(result, expected)
+            });
+
+            it('should find variables at different levels', () => {
+                var result = finder([input]).findLevelOne_LevelTwo_LevelThreeAndLevelOne_LevelTwo_AlsoLevelThree();
+                var expected = [{
+                    levelOne_levelTwo_levelThree: {
+                        levelFour: "hey"
+                    },
+                    levelOne_levelTwo_alsoLevelThree: "three"
+                }];
+                assert.deepEqual(result, expected)
+            });
+
+            it('should rename nested to shorter', () => {
+                var result = finder([input]).findLevelOne_LevelTwo_LevelThreeAsHelloKittyAndLevelOne_LevelTwo_AlsoLevelThreeAsShort();
+                var expected = [{
+                    helloKitty: {
+                        levelFour: "hey"
+                    },
+                    short: "three"
+                }];
+                assert.deepEqual(result, expected)
+            });
         });
+
     });
 
     describe('Filter on where', () => {

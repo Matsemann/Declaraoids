@@ -19,12 +19,12 @@ function finder(array, query) {
         }
 
         if (parsed.find.length == 1) {
-            return findNested(e, parsed.find[0]);
+            return findNested(e, parsed.find[0].prop);
         }
 
         var obj = {};
         parsed.find.forEach(find => {
-            obj[find] = findNested(e, find);
+            obj[find.name] = findNested(e, find.prop);
         });
         return obj;
     };
