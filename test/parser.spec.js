@@ -1,5 +1,5 @@
 var assert = require('assert');
-var parser = require('../src/parser.js');
+var parser = require('../src/parser');
 
 // Query should be on the form findNameAndAgeAsRealAgeWhereAddress_CityEqualsCity
 

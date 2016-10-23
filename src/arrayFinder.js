@@ -1,12 +1,12 @@
-var finder = require('./finder');
+var declaraoids = require('./declaraoids');
 
 module.exports = (array) => {
     return new Proxy(array, {
-        get (target, property, args) {
+        get (target, property) {
             if (!property.startsWith('find')) {
                 return array[property];
             }
-            return args => finder[property](target, args);
+            return args => declaraoids[property](target, args);
         }
     });
 };

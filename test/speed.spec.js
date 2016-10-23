@@ -1,9 +1,9 @@
 var assert = require('assert');
 var Benchmark = require('benchmark');
 
-var finder = require('../src/finder.js');
+var declaraoids = require('../src/declaraoids');
 
-describe.skip('Speed comparison', () => { // remove skip to include speed tests
+describe('Speed comparison', () => { // remove skip to include speed tests
 
     function simpleFilterMap(data) {
         return data
@@ -12,7 +12,7 @@ describe.skip('Speed comparison', () => { // remove skip to include speed tests
     }
 
     function simpleFinder(data) {
-        return finder.findNameWhereAgeGreaterThanX(data, {x: 500});
+        return declaraoids.findNameWhereAgeGreaterThanX(data, {x: 500});
     }
 
     function advancedFilterMap(data) {
@@ -23,7 +23,7 @@ describe.skip('Speed comparison', () => { // remove skip to include speed tests
     }
 
     function advancedFinder(data) {
-        return finder
+        return declaraoids
             .findNameAndNested_Nested2AsCustomWhereAgeGreaterThanXAndNested_Nested3LessThanY(data, {
                 x: 500,
                 y: 750
@@ -75,7 +75,7 @@ describe.skip('Speed comparison', () => { // remove skip to include speed tests
                 .add('Simple filter&map', function () {
                     simpleFilterMap(data);
                 })
-                .add('Simple finder', function () {
+                .add('Simple declaraoids', function () {
                     simpleFinder(data);
                 })
                 .on('complete', completeFunction(size))
@@ -95,16 +95,16 @@ describe.skip('Speed comparison', () => { // remove skip to include speed tests
             var data = generateData(size);
             var suite = new Benchmark.Suite;
 
-            var cachedFinder = finder.findNameAndNested_Nested2AsCustomWhereAgeGreaterThanXAndNested_Nested3LessThanY;
+            var cachedFinder = declaraoids.findNameAndNested_Nested2AsCustomWhereAgeGreaterThanXAndNested_Nested3LessThanY;
 
             suite
                 .add('Advanced filter&map', function () {
                     advancedFilterMap(data);
                 })
-                .add('Advanced finder', function () {
+                .add('Advanced declaraoids', function () {
                     advancedFinder(data);
                 })
-                .add('Advanced finder CACHED', function () {
+                .add('Advanced declaraoids CACHED', function () {
                     cachedFinder(data, { x: 500, y: 750});
                 })
                 .on('complete', completeFunction(size))

@@ -1,5 +1,5 @@
 var assert = require('assert');
-var arrayFinder = require('../src/arrayFinder.js');
+var arrayFinder = require('../src/arrayFinder');
 
 var p1 = { name: "Mats", age: 25, sex: "M", address: { city: "Oslo"} };
 var p2 = { name: "Kåre", age: 31, sex: "M", address: { city: "Bergen"} };
