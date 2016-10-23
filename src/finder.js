@@ -15,6 +15,10 @@ function finder(array, query) {
 
 
     var mapFunc = e => {
+        if (parsed.find.length == 0) {
+            return e;
+        }
+
         var obj = {};
         parsed.find.forEach(find => {
             var properties = find.split('_');

@@ -26,6 +26,7 @@ function splitQuery(query) {
 }
 
 function generateFind(findQuery) {
+    if (findQuery == '') return [];
     return findQuery.split('And').map(convertBackToCamelCase);
 }
 

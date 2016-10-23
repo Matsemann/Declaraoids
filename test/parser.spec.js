@@ -5,18 +5,26 @@ var parser = require('../src/parser.js');
 
 describe('Parser', () => {
     describe('find clause', () => {
+        it('nothing when nothing specified', () => {
+            var expected = [];
+            assert.deepEqual(parser('find').find, expected);
+        });
+
         it('finds a single variable', () => {
             var expected = ['name'];
             assert.deepEqual(parser('findName').find, expected);
         });
+
         it('finds multiple variables', () => {
             var expected = ['name', 'address'];
             assert.deepEqual(parser('findNameAndAddress').find, expected);
         });
+
         it('assumes camelCase', () => {
             var expected = ['name', 'streetAddress'];
             assert.deepEqual(parser('findNameAndStreetAddress').find, expected);
         });
+
         it('finds nested properties and camelCases them', () => {
             var expected = ['name', 'address_houseNumber'];
             assert.deepEqual(parser('findNameAndAddress_HouseNumber').find, expected);
@@ -33,6 +41,7 @@ describe('Parser', () => {
             }];
             assert.deepEqual(parser(query).where, expected);
         });
+
         it('multiple clauses', () => {
             var input = 'findSomethingWhereFirstNameNotEqualsFirstNameAndLastNameEqualsLast';
 
@@ -47,6 +56,7 @@ describe('Parser', () => {
             }];
             assert.deepEqual(parser(input).where, expected);
         });
+
         it('where on a nested property', () => {
             var input = 'findSomethingWhereAddress_StreetNameIncludesStreetName';
 

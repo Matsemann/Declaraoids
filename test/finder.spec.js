@@ -16,6 +16,11 @@ describe('Finder', () => {
     });
 
     describe('find variables', () => {
+        it('return all when no find specified', () => {
+            var result = array3.find();
+
+            assert.deepEqual(result, [p1, p2, p3])
+        });
 
         it('should find a single variable, name', () => {
             var result = array3.findName();
