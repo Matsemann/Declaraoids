@@ -31,5 +31,14 @@ describe('ArrayFinder', () => {
 
             assert.deepEqual(result, expected)
         });
+
+        it('should filter', () => {
+            var arr = arrayFinder([p1, p2, p3]);
+            var result = arr.findNameWhereAgeEqualsX({x: 25});
+
+            var expected = ["Mats"];
+
+            assert.deepEqual(result, expected)
+        });
     });
 });
