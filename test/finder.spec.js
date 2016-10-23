@@ -106,7 +106,7 @@ describe('Finder', () => {
             assert.deepEqual(result, expected)
         });
 
-        it('multiple, greater than', () => {
+        it('multiple filters, greater than', () => {
             var result = array3.findWhereSexEqualsGenderAndAgeGreaterThanNr({gender: "M", nr: 30});
             var expected = [p2];
             assert.deepEqual(result, expected)
@@ -117,5 +117,26 @@ describe('Finder', () => {
             var expected = [p2, p3];
             assert.deepEqual(result, expected)
         });
+    });
+
+    it('Show-off', () => {
+        var data = {
+            title: "A cool article",
+            author: {
+                name: "Mats",
+                address: {
+                    city: "Oslo",
+                    zip: "0567"
+                }
+            },
+            content: {
+                ingress: "A cool ingress",
+                fullText: "A long text....",
+                totalWords: 500
+            }
+        };
+
+        var result = finder([data]).findTitleAndAuthor_NameAsAuthorWhereAuthor_Address_ZipEqualsZipAndContent_IngressIncludesXAndContent_TotalWordsGreaterThanWords({zip: '0567', x: 'cool', words: 400});
+        assert.deepEqual(result, [{title: "A cool article", author: "Mats"}]);
     });
 });

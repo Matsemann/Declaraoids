@@ -38,7 +38,7 @@ function finder(array, query) {
                 case 'noteequals': return value !== compareWith;
                 case 'lessthan': return value < compareWith;
                 case 'greaterthan': return value > compareWith;
-                case 'included': return value.includes(compareWith);
+                case 'includes': return value.includes(compareWith);
             }
         });
     };
