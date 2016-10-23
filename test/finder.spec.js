@@ -25,7 +25,7 @@ describe('Finder', () => {
         it('should find a single variable, name', () => {
             var result = array3.findName();
 
-            var expected = [{ name: "Mats"}, { name: "Kåre"}, {name: "Linn"}];
+            var expected = ["Mats", "Kåre", "Linn"];
 
             assert.deepEqual(result, expected)
         });
@@ -58,13 +58,16 @@ describe('Finder', () => {
             var input = {
                 levelOne: {
                     levelTwo: {
-                        levelThree: "hey"
+                        levelThree: {
+                            levelFour: "hey"
+                        }
+
                     }
                 }
             };
             var result = finder([input]).findLevelOne_LevelTwo_LevelThree();
             var expected = [{
-                levelOne_levelTwo_levelThree: "hey"
+                levelFour: "hey"
             }];
             assert.deepEqual(result, expected)
         });

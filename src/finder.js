@@ -17,6 +17,10 @@ function finder(array, query) {
         if (parsed.find.length == 0) {
             return e;
         }
+        
+        if (parsed.find.length == 1) {
+            return findNested(e, parsed.find[0]);
+        }
 
         var obj = {};
         parsed.find.forEach(find => {
