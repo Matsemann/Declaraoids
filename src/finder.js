@@ -25,25 +25,38 @@ function finder(query) {
         return obj;
     };
 
-    var filterFunc = args => e => {
-        return parsed.where.every(where => {
-            var value = findNested(e, where.property);
-            var compareWith = args[where.input];
-            switch (where.comparison) {
-                case 'equals': return value === compareWith;
-                case 'noteequals': return value !== compareWith;
-                case 'lessthan': return value < compareWith;
-                case 'greaterthan': return value > compareWith;
-                case 'includes': return value.includes(compareWith);
-            }
-        });
-    };
+    var filterFunc = generateFilterFunction(parsed);
 
     return (array, args) => {
         return array
             .filter(filterFunc(args))
             .map(mapFunc);
     }
+}
+
+var functions = {
+    equals: (value, compareWith) => value === compareWith,
+    noteequals: (value, compareWith) => value !== compareWith,
+    lessthan: (value, compareWith) => value < compareWith,
+    greaterthan: (value, compareWith) => value > compareWith,
+    includes: (value, compareWith) => value.includes(compareWith)
+};
+
+function generateFilterFunction(parsed) {
+    var filters = [];
+
+    parsed.where.forEach(where => {
+        var func = functions[where.comparison];
+
+        filters.push((e, args) => {
+            var value = findNested(e, where.property);
+            var compareWith = args[where.input];
+            return func(value, compareWith);
+        })
+    });
+
+    return args => e => filters.every(f => f(e, args));
+
 }
 
 function findNested(start, path) {
