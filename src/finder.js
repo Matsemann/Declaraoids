@@ -20,21 +20,14 @@ function finder(array, query) {
 
         var obj = {};
         parsed.find.forEach(find => {
-            var properties = find.split('_');
-
-            var current = e;
-            for (var i = 0; i < properties.length; i++) {
-                current = current[properties[i]];
-            }
-
-            obj[find] = current;
+            obj[find] = findNested(e, find);
         });
         return obj;
     };
 
     var filterFunc = args => e => {
         return parsed.where.every(where => {
-            var value = e[where.property];
+            var value = findNested(e, where.property);
             var compareWith = args[where.input];
             switch (where.comparison) {
                 case 'equals': return value === compareWith;
@@ -51,4 +44,14 @@ function finder(array, query) {
             .filter(filterFunc(args))
             .map(mapFunc);
     }
+}
+
+function findNested(start, path) {
+    var properties = path.split('_');
+
+    var current = start;
+    for (var i = 0; i < properties.length; i++) {
+        current = current[properties[i]];
+    }
+    return current;
 }

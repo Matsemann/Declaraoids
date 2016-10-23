@@ -83,10 +83,10 @@ describe('Finder', () => {
             assert.deepEqual(result, expected)
         });
 
-        //it('nested where', () => {
-        //    var result = finder([p1, p2, p3]).findWhereAddress_CityEqualsCity({city: 'Bergen'});
-        //    var expected = [p2, p3];
-        //    assert.deepEqual(result, expected)
-        //});
+        it('nested where', () => {
+            var result = finder([p1, p2, p3]).findWhereAddress_CityEqualsCity({city: 'Bergen'});
+            var expected = [p2, p3];
+            assert.deepEqual(result, expected)
+        });
     });
 });
