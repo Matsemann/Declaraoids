@@ -47,6 +47,10 @@ function finder(query) {
 }
 
 function findNested(start, path) {
+    if (!path.includes('_')) {
+        return start[path];
+    }
+
     var properties = path.split('_');
 
     var current = start;
