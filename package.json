@@ -1,0 +1,10 @@
+{
+  "name": "arrayfind",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Mats Krüger Svensson",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^3.1.2"
+  }
+}
