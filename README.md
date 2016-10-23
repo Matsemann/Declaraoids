@@ -8,7 +8,7 @@
 
 ## What?
 
-Using the power of ES6 Proxies to give you declarative programming on stereoids.
+Using the power of [ES6 Proxies](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) to give you declarative programming on steroids.
 
 Given,
 
@@ -69,6 +69,20 @@ var data = [
 
 var result = declaraoids.findTitleAndAuthor_NameAsAuthorWhereAuthor_Address_ZipEqualsZipAndContent_IngressIncludesXAndContent_TotalWordsGreaterThanWords(data, {zip: '0567', x: 'cool', words: 400});
 assert.deepEqual(result, [{title: "A cool article", author: "Mats"}]);
+```
+
+Examples on usages from `test/finder.spec.js`:
+
+```javascript
+declaraoids.find(persons); // returns the whole array
+declaraoids.findName(persons); // ["Mats", "Kåre", "Linn"]
+declaraoids.findNameAndAge(persons); // [{ name: "Mats", age: 25 }, { name: "Kåre", age: 31 }, { name: "Linn", age: 22 }]
+
+var input = { levelOne: { levelTwo: { levelThree: { levelFour: "hey"}, alsoLevelThree: "three"}}};
+declaraoids.findLevelOne_LevelTwo_LevelThreeAsHelloKittyAndLevelOne_LevelTwo_AlsoLevelThreeAsShort([input]); // [{ helloKitty: { levelFour: "hey" }, short: "three" }]
+
+declaraoids.findWhereNameEqualsX(persons, {x: "Mats"}); // [{ name: "Mats", age: 25, address: { city: "Oslo"}  }]
+declaraoids.findWhereSexEqualsGenderAndAgeGreaterThanNr(persons, {gender: "M", nr: 30}); // { name: "Kåre", age: 30, address: { city: "Bergen"} }
 ```
 
 ---
@@ -173,3 +187,5 @@ Current plans include:
 ## Should I use it?
 
 > By asking that your rights to push code to production were automagically removed.
+
+But seriously, this is how we do it in [Java-land](http://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation).
