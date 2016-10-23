@@ -81,8 +81,8 @@ declaraoids.findNameAndAge(persons); // [{ name: "Mats", age: 25 }, { name: "Kå
 var input = { levelOne: { levelTwo: { levelThree: { levelFour: "hey"}, alsoLevelThree: "three"}}};
 declaraoids.findLevelOne_LevelTwo_LevelThreeAsHelloKittyAndLevelOne_LevelTwo_AlsoLevelThreeAsShort([input]); // [{ helloKitty: { levelFour: "hey" }, short: "three" }]
 
-declaraoids.findWhereNameEqualsX(persons, {x: "Mats"}); // [{ name: "Mats", age: 25, address: { city: "Oslo"}  }]
-declaraoids.findWhereSexEqualsGenderAndAgeGreaterThanNr(persons, {gender: "M", nr: 30}); // { name: "Kåre", age: 30, address: { city: "Bergen"} }
+declaraoids.findWhereNameEqualsX(persons, {x: "Mats"}); // [{ name: "Mats", age: 25, sex: "M", address: { city: "Oslo"}  }]
+declaraoids.findWhereSexEqualsGenderAndAgeGreaterThanNr(persons, {gender: "M", nr: 30}); // { name: "Kåre", age: 30, sex: "M", address: { city: "Bergen"} }
 ```
 
 ---
@@ -116,7 +116,7 @@ declaraoids.findWhereSexEqualsGenderAndAgeGreaterThanNr(persons, {gender: "M", n
 * The Where is optional, will select all elements in the array if not present
 * Can have multiple conditions separated by `And`
 * A condition consists of the property to be compared, the comparison, and the name of the parameter to the function.
-Like `NameEqualsX`, will compare `name` on each object in the array with the value `x` from the passed object.
+Like `NameEqualsX`, will compare `name` on each object in the array with the value of `x` from the passed object.
 
 
 ### Property
