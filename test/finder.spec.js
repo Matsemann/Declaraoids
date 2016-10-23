@@ -7,31 +7,28 @@ var p3 = { name: "Linn", age: 22, sex: "F", address: { city: "Bergen"} };
 
 
 describe('Finder', () => {
-    var array2 = finder([p1, p2]);
-    var array3 = finder([p1, p2, p3]);
+    var array2 = [p1, p2];
+    var array3 = [p1, p2, p3];
 
-    it('calls underlying array when not starting with find', () => {
-        assert.deepEqual(p3, array3[2]);
-        assert.equal(3, array3.length);
-    });
 
     describe('find variables', () => {
         it('return all when no find specified', () => {
-            var result = array3.find();
+            var func = finder.find;
+            var result = func(array3);
 
             assert.deepEqual(result, [p1, p2, p3])
         });
 
         it('should find a single variable, name', () => {
-            var result = array3.findName();
+            var result = finder.findName(array3);
 
             var expected = ["Mats", "Kåre", "Linn"];
 
             assert.deepEqual(result, expected)
         });
 
-        it('should find a multiple variables, name and age', () => {
-            var result = array2.findNameAndAge();
+        it('should find multiple variables, name and age', () => {
+            var result = finder.findNameAndAge(array2);
             var expected = [{
                 name: "Mats",
                 age: 25
@@ -43,7 +40,7 @@ describe('Finder', () => {
         });
 
         it('should find nested variables', () => {
-            var result = array2.findNameAndAddress_City();
+            var result = finder.findNameAndAddress_City(array2);
             var expected = [{
                 name: "Mats",
                 address_city: "Oslo"
@@ -67,7 +64,7 @@ describe('Finder', () => {
             };
 
             it('should find supernested variables', () => {
-                var result = finder([input]).findLevelOne_LevelTwo_LevelThree();
+                var result = finder.findLevelOne_LevelTwo_LevelThree([input]);
                 var expected = [{
                     levelFour: "hey"
                 }];
@@ -75,7 +72,7 @@ describe('Finder', () => {
             });
 
             it('should find variables at different levels', () => {
-                var result = finder([input]).findLevelOne_LevelTwo_LevelThreeAndLevelOne_LevelTwo_AlsoLevelThree();
+                var result = finder.findLevelOne_LevelTwo_LevelThreeAndLevelOne_LevelTwo_AlsoLevelThree([input]);
                 var expected = [{
                     levelOne_levelTwo_levelThree: {
                         levelFour: "hey"
@@ -86,7 +83,7 @@ describe('Finder', () => {
             });
 
             it('should rename nested to shorter', () => {
-                var result = finder([input]).findLevelOne_LevelTwo_LevelThreeAsHelloKittyAndLevelOne_LevelTwo_AlsoLevelThreeAsShort();
+                var result = finder.findLevelOne_LevelTwo_LevelThreeAsHelloKittyAndLevelOne_LevelTwo_AlsoLevelThreeAsShort([input]);
                 var expected = [{
                     helloKitty: {
                         levelFour: "hey"
@@ -101,19 +98,19 @@ describe('Finder', () => {
 
     describe('Filter on where', () => {
         it('equals', () => {
-            var result = array3.findWhereNameEqualsName({name: "Mats"});
+            var result = finder.findWhereNameEqualsName(array3, {name: "Mats"});
             var expected = [p1];
             assert.deepEqual(result, expected)
         });
 
         it('multiple filters, greater than', () => {
-            var result = array3.findWhereSexEqualsGenderAndAgeGreaterThanNr({gender: "M", nr: 30});
+            var result = finder.findWhereSexEqualsGenderAndAgeGreaterThanNr(array3, {gender: "M", nr: 30});
             var expected = [p2];
             assert.deepEqual(result, expected)
         });
 
         it('nested where', () => {
-            var result = finder([p1, p2, p3]).findWhereAddress_CityEqualsCity({city: 'Bergen'});
+            var result = finder.findWhereAddress_CityEqualsCity(array3, {city: 'Bergen'});
             var expected = [p2, p3];
             assert.deepEqual(result, expected)
         });
@@ -136,7 +133,7 @@ describe('Finder', () => {
             }
         };
 
-        var result = finder([data]).findTitleAndAuthor_NameAsAuthorWhereAuthor_Address_ZipEqualsZipAndContent_IngressIncludesXAndContent_TotalWordsGreaterThanWords({zip: '0567', x: 'cool', words: 400});
+        var result = finder.findTitleAndAuthor_NameAsAuthorWhereAuthor_Address_ZipEqualsZipAndContent_IngressIncludesXAndContent_TotalWordsGreaterThanWords([data], {zip: '0567', x: 'cool', words: 400});
         assert.deepEqual(result, [{title: "A cool article", author: "Mats"}]);
     });
 });

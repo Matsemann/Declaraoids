@@ -12,7 +12,7 @@ describe.only('Speed comparison', () => {
     }
 
     function simpleFinder(data) {
-        return finder(data).findNameWhereAgeGreaterThanX({x: 500});
+        return finder.findNameWhereAgeGreaterThanX(data, {x: 500});
     }
 
     function advancedFilterMap(data) {
@@ -23,8 +23,8 @@ describe.only('Speed comparison', () => {
     }
 
     function advancedFinder(data) {
-        return finder(data)
-            .findNameAndNested_Nested2AsCustomWhereAgeGreaterThanXAndNested_Nested3LessThanY({
+        return finder
+            .findNameAndNested_Nested2AsCustomWhereAgeGreaterThanXAndNested_Nested3LessThanY(data, {
                 x: 500,
                 y: 750
             });
@@ -95,12 +95,17 @@ describe.only('Speed comparison', () => {
             var data = generateData(size);
             var suite = new Benchmark.Suite;
 
+            var cachedFinder = finder.findNameAndNested_Nested2AsCustomWhereAgeGreaterThanXAndNested_Nested3LessThanY;
+
             suite
                 .add('Advanced filter&map', function () {
-                    simpleFilterMap(data);
+                    advancedFilterMap(data);
                 })
                 .add('Advanced finder', function () {
-                    simpleFinder(data);
+                    advancedFinder(data);
+                })
+                .add('Advanced finder CACHED', function () {
+                    cachedFinder(data, { x: 500, y: 750});
                 })
                 .on('complete', completeFunction(size))
                 .run();

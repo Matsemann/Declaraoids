@@ -1,16 +1,12 @@
 var parser = require('./parser');
 
-module.exports = (array) => {
-    return new Proxy(array, {
-        get (target, property) { return finder(target, property); }
-    });
-};
-
-function finder(array, query) {
-    if (!query.startsWith('find')) {
-        return array[query];
+module.exports = new Proxy({}, {
+    get (target, property) {
+        return finder(property);
     }
+});
 
+function finder(query) {
     var parsed = parser(query);
 
     var mapFunc = e => {
@@ -43,7 +39,7 @@ function finder(array, query) {
         });
     };
 
-    return (args) => {
+    return (array, args) => {
         return array
             .filter(filterFunc(args))
             .map(mapFunc);
