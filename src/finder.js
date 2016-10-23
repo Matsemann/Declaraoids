@@ -17,7 +17,14 @@ function finder(array, query) {
     var mapFunc = e => {
         var obj = {};
         parsed.find.forEach(find => {
-            obj[find] = e[find];
+            var properties = find.split('_');
+
+            var current = e;
+            for (var i = 0; i < properties.length; i++) {
+                current = current[properties[i]];
+            }
+
+            obj[find] = current;
         });
         return obj;
     };
