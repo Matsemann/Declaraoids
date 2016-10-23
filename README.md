@@ -8,7 +8,7 @@
 
 ## What?
 
-Using the power of [ES6 Proxies](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) to give you declarative programming on steroids.
+Using the power of [ES6 Proxies](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) to give you declarative programming <strike>taken too far</strike> on steroids.
 
 Given,
 
