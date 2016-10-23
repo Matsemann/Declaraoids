@@ -9,22 +9,7 @@ module.exports = new Proxy({}, {
 function finder(query) {
     var parsed = parser(query);
 
-    var mapFunc = e => {
-        if (parsed.find.length == 0) {
-            return e;
-        }
-
-        if (parsed.find.length == 1) {
-            return findNested(e, parsed.find[0].prop);
-        }
-
-        var obj = {};
-        parsed.find.forEach(find => {
-            obj[find.name] = findNested(e, find.prop);
-        });
-        return obj;
-    };
-
+    var mapFunc = generateMapFunction(parsed);
     var filterFunc = generateFilterFunction(parsed);
 
     return (array, args) => {
@@ -33,6 +18,25 @@ function finder(query) {
             .map(mapFunc);
     }
 }
+
+function generateMapFunction(parsed) {
+    if (parsed.find.length == 0) {
+        return e => e;
+    }
+
+    if (parsed.find.length == 1) {
+        return e => findNested(e, parsed.find[0].prop);
+    }
+
+    return e => {
+        var obj = {};
+        parsed.find.forEach(find => {
+            obj[find.name] = findNested(e, find.prop);
+        });
+        return obj;
+    };
+}
+
 
 var functions = {
     equals: (value, compareWith) => value === compareWith,

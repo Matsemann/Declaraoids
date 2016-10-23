@@ -3,7 +3,7 @@ var Benchmark = require('benchmark');
 
 var finder = require('../src/finder.js');
 
-describe.only('Speed comparison', () => { // remove skip to include speed tests
+describe.skip('Speed comparison', () => { // remove skip to include speed tests
 
     function simpleFilterMap(data) {
         return data
