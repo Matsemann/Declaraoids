@@ -13,7 +13,6 @@ function finder(array, query) {
 
     var parsed = parser(query);
 
-
     var mapFunc = e => {
         if (parsed.find.length == 0) {
             return e;
@@ -33,8 +32,23 @@ function finder(array, query) {
         return obj;
     };
 
+    var filterFunc = args => e => {
+        return parsed.where.every(where => {
+            var value = e[where.property];
+            var compareWith = args[where.input];
+            switch (where.comparison) {
+                case 'equals': return value === compareWith;
+                case 'noteequals': return value !== compareWith;
+                case 'lessthan': return value < compareWith;
+                case 'greaterthan': return value > compareWith;
+                case 'included': return value.includes(compareWith);
+            }
+        });
+    };
 
-    return () => {
-        return array.map(mapFunc);
+    return (args) => {
+        return array
+            .filter(filterFunc(args))
+            .map(mapFunc);
     }
 }

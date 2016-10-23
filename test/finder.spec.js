@@ -41,6 +41,7 @@ describe('Finder', () => {
             }];
             assert.deepEqual(result, expected)
         });
+
         it('should find nested variables', () => {
             var result = array2.findNameAndAddress_City();
             var expected = [{
@@ -52,6 +53,7 @@ describe('Finder', () => {
             }];
             assert.deepEqual(result, expected)
         });
+
         it('should find supernested variables', () => {
             var input = {
                 levelOne: {
@@ -66,5 +68,25 @@ describe('Finder', () => {
             }];
             assert.deepEqual(result, expected)
         });
+    });
+
+    describe('Filter on where', () => {
+        it('equals', () => {
+            var result = array3.findWhereNameEqualsName({name: "Mats"});
+            var expected = [p1];
+            assert.deepEqual(result, expected)
+        });
+
+        it('multiple, greater than', () => {
+            var result = array3.findWhereSexEqualsGenderAndAgeGreaterThanNr({gender: "M", nr: 30});
+            var expected = [p2];
+            assert.deepEqual(result, expected)
+        });
+
+        //it('nested where', () => {
+        //    var result = finder([p1, p2, p3]).findWhereAddress_CityEqualsCity({city: 'Bergen'});
+        //    var expected = [p2, p3];
+        //    assert.deepEqual(result, expected)
+        //});
     });
 });
