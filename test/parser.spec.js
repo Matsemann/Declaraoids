@@ -22,4 +22,42 @@ describe('Parser', () => {
             assert.deepEqual(parser('findNameAndAddress_HouseNumber').find, expected);
         });
     });
+
+    describe('where clause', () => {
+        it('a single equals clause', () => {
+            var query = 'findSomethingWhereFirstNameEqualsX';
+            var expected = [{
+                property: 'firstName',
+                comparison: 'equals',
+                input: 'x'
+            }];
+            assert.deepEqual(parser(query).where, expected);
+        });
+        it('multiple clauses', () => {
+            var input = 'findSomethingWhereFirstNameNotEqualsFirstNameAndLastNameEqualsLast';
+
+            var expected = [{
+                property: 'firstName',
+                comparison: 'notequals',
+                input: 'firstName'
+            }, {
+                property: 'lastName',
+                comparison: 'equals',
+                input: 'last'
+            }];
+            assert.deepEqual(parser(input).where, expected);
+        });
+        it('where on a nested property', () => {
+            var input = 'findSomethingWhereAddress_StreetNameIncludesStreetName';
+
+            var expected = [{
+                property: 'address_streetName',
+                comparison: 'includes',
+                input: 'streetName'
+            }];
+
+            assert.deepEqual(parser(input).where, expected);
+        });
+    });
+
 });
