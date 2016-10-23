@@ -5,6 +5,7 @@
   "author": "Mats Krüger Svensson",
   "license": "MIT",
   "devDependencies": {
+    "benchmark": "^2.1.1",
     "mocha": "^3.1.2"
   }
 }
