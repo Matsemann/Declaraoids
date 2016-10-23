@@ -71,6 +71,27 @@ describe('Finder', () => {
             }];
             assert.deepEqual(result, expected)
         });
+
+        it('should find supernested variables at different levels', () => {
+            var input = {
+                levelOne: {
+                    levelTwo: {
+                        levelThree: {
+                            levelFour: "hey"
+                        },
+                        alsoLevelThree: "three"
+                    }
+                }
+            };
+            var result = finder([input]).findLevelOne_LevelTwo_LevelThreeAndLevelOne_LevelTwo_AlsoLevelThree();
+            var expected = [{
+                levelOne_levelTwo_levelThree: {
+                    levelFour: "hey"
+                },
+                levelOne_levelTwo_alsoLevelThree: "three"
+            }];
+            assert.deepEqual(result, expected)
+        });
     });
 
     describe('Filter on where', () => {
