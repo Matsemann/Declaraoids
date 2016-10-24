@@ -41,7 +41,12 @@ var result = declaraoids.findNameAndSexAsGenderWhereAgeGreaterThanXAndAddress_Ci
 ## Wat?[<sup>*</sup>](https://www.destroyallsoftware.com/talks/wat)
 
 Proxies allow us to insert *traps* on objects. This trap looks at the function you try to call
-(which obviously doesn't exist) and then creates it dynamically using the function name. For other fun with proxies, see [proxy-fun](https://github.com/mikaelbr/proxy-fun).
+(which obviously doesn't exist) and then creates it dynamically using the function name.
+
+Basically, this project allows you to call arbitrary functions, and then tries to implement those functions to do what you wanted.
+It only works for `find`, <strike>and shouldn't</strike> but could be extended to handle whatever you throw at it. In the future, us programmers won't have to think!
+
+For other fun with proxies, see [proxy-fun](https://github.com/mikaelbr/proxy-fun).
 
 ## Examples
 
