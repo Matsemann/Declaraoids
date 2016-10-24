@@ -76,7 +76,7 @@ var result = declaraoids.findTitleAndAuthor_NameAsAuthorWhereAuthor_Address_ZipE
 assert.deepEqual(result, [{title: "A cool article", author: "Mats"}]);
 ```
 
-Examples on usages from `test/finder.spec.js`:
+Examples on usages, see `test/finder.spec.js`:
 
 ```javascript
 declaraoids.find(persons); // returns the whole array
@@ -86,6 +86,7 @@ declaraoids.findNameAndAge(persons); // [{ name: "Mats", age: 25 }, { name: "Kå
 var input = { levelOne: { levelTwo: { levelThree: { levelFour: "hey"}, alsoLevelThree: "three"}}};
 declaraoids.findLevelOne_LevelTwo_LevelThreeAsHelloKittyAndLevelOne_LevelTwo_AlsoLevelThreeAsShort([input]); // [{ helloKitty: { levelFour: "hey" }, short: "three" }]
 
+declaraoids.findNameAndAgeWhereSexEqualsX(persons, {x: 'male'}); // [{ name: "Mats", age: 25 }, { name: "Kåre", age: 31 }]
 declaraoids.findWhereNameEqualsX(persons, {x: "Mats"}); // [{ name: "Mats", age: 25, sex: "M", address: { city: "Oslo"}  }]
 declaraoids.findWhereSexEqualsGenderAndAgeGreaterThanNr(persons, {gender: "M", nr: 30}); // { name: "Kåre", age: 30, sex: "M", address: { city: "Bergen"} }
 ```
