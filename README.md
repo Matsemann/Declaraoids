@@ -126,7 +126,7 @@ Like `NameEqualsX`, will compare `name` on each object in the array with the val
 
 
 ### Property
-````
+```
 <property>: [a-zA-Z0-9_]*
 ```
 
